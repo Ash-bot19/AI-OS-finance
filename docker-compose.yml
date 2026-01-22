@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  ai-os-finance:
+    build: .
+    container_name: ai-os-finance
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    networks:
+      - ai_net
+
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=admin
+      - N8N_BASIC_AUTH_PASSWORD=admin
+      - N8N_HOST=localhost
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+    volumes:
+      - n8n_data:/home/node/.n8n
+    networks:
+      - ai_net
+
+networks:
+  ai_net:
+    driver: bridge
+
+volumes:
+  n8n_data:

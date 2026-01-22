@@ -19,8 +19,8 @@ def calculate_dcf(inputs: Dict) -> Dict:
     shares_outstanding = inputs.get("shares_outstanding")
     net_debt = inputs.get("net_debt")
 
-    if shares_outstanding is None or net_debt is None:
-        raise ValueError("Missing required inputs: shares_outstanding or net_debt")
+    if shares_outstanding is None and net_debt is None:
+        raise ValueError("At least one of shares_outstanding or net_debt is required")
 
     # -----------------------------
     # 2. MODEL PARAMETERS
@@ -89,8 +89,14 @@ def calculate_dcf(inputs: Dict) -> Dict:
     discounted_terminal = terminal_value / ((1 + wacc) ** years)
 
     enterprise_value = sum(discounted_fcff) + discounted_terminal
-    equity_value = enterprise_value - net_debt
-    value_per_share = equity_value / shares_outstanding
+
+    equity_value = None
+    if net_debt is not None:
+        equity_value = enterprise_value - net_debt
+
+    value_per_share = None
+    if equity_value is not None and shares_outstanding is not None:
+        value_per_share = equity_value / shares_outstanding
 
     # -----------------------------
     # 6. FINAL OUTPUT

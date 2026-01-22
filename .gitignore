@@ -1,4 +1,19 @@
-.venv/
-.env
+# Python
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+.env
+.env.*
+
+# n8n / runtime
+n8n_data/
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/

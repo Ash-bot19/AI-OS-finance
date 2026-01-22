@@ -1,0 +1,153 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "0f4728e2-f4d1-43db-be5b-0308dc94ce59",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://ai-os-finance:8000/finance/pipeline",
+        "sendHeaders": true,
+        "specifyHeaders": "=keypair",
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"task\": \"Build a DCF valuation model for Apple\",\n  \"context\": \"Use conservative assumptions\",\n  \"dcf_inputs\": {\n    \"revenue\": 380000,\n    \"cash_flows\": [100, 110, 120],\n    \"discount_rate\": 0.1,\n    \"terminal_growth\": 0.03,\n    \"shares_outstanding\": 16000,\n    \"net_debt\": 50000\n  }\n}\n",
+        "options": {
+          "timeout": 10000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        208,
+        0
+      ],
+      "id": "fc531260-561e-442f-8671-6b0ec278ab32",
+      "name": "Finance Pipeline(HTTP) "
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://ai-os-finance:8000/finance/scenario",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"base_inputs\": {\n    \"revenue\": 380000,\n    \"discount_rate\": 0.1,\n    \"terminal_growth\": 0.03,\n    \"shares_outstanding\": 16000,\n    \"net_debt\": 50000\n  },\n  \"scenarios\": {\n    \"bull\": {\n      \"discount_rate\": 0.085,\n      \"terminal_growth\": 0.035\n    },\n    \"bear\": {\n      \"discount_rate\": 0.11,\n      \"terminal_growth\": 0.02\n    }\n  }\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        416,
+        0
+      ],
+      "id": "28857060-a62d-4865-9336-5a2e0543bd7c",
+      "name": "Scenario Analysis(HTTP)"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://ai-os-finance:8000/finance/scenario/export/csv",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"scenario_result\": {\n    \"base\": {\n      \"enterprise_value\": 835643.34,\n      \"equity_value\": 785643.34,\n      \"value_per_share\": 49.1\n    },\n    \"bull\": {\n      \"enterprise_value\": 896810.46,\n      \"equity_value\": 846810.46,\n      \"value_per_share\": 52.93\n    },\n    \"bear\": {\n      \"enterprise_value\": 739523.58,\n      \"equity_value\": 689523.58,\n      \"value_per_share\": 43.1\n    }\n  }\n}\n",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        624,
+        0
+      ],
+      "id": "304aff5e-ae4f-4f0c-bb21-351f9710f918",
+      "name": "CSV Export"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Finance Pipeline(HTTP) ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Finance Pipeline(HTTP) ": {
+      "main": [
+        [
+          {
+            "node": "Scenario Analysis(HTTP)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Scenario Analysis(HTTP)": {
+      "main": [
+        [
+          {
+            "node": "CSV Export",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "a0f7e2bd-7d6e-454c-8878-aacc6356a3a7",
+  "meta": {
+    "instanceId": "38131ebff3cea6a4247db9ec4dd61b6cb4fd7115e7cd99245208a3c6e7edfd8c"
+  },
+  "id": "WGLimd1ugI1N9HKKb9BI-",
+  "tags": []
+}
