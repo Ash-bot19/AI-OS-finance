@@ -1,38 +1,45 @@
-# AI OS — Agentic Finance & Data System (v1)
+# 🧠 AI OS for Financial Analysis  
+**A Deterministic, Agentic Finance System (MOCK-first, PROD-ready)**
 
-A production-oriented, agentic GenAI system focused on **financial analysis, valuation, and scenario modeling**, built with strict reliability and cost-discipline principles.
+---
 
-## Core Capabilities
-- Research Agent (RAG-first, tool-aware)
-- Data Engineer Agent (pipeline & ETL design)
-- Finance Agent v1 (DCF model scaffold)
-- Finance Agent v2 (interpretation & narrative layer)
-- Deterministic DCF Calculator (no LLMs)
-- Scenario Analysis (Base / Bull / Bear)
-- CSV Exports (valuation & scenarios)
+## 📌 Overview
 
-## Architecture Highlights
-- Clear separation of concerns:
-  - Agents → reasoning & structure
-  - Tools → deterministic computation
-  - API → orchestration
-- MOCK / PROD LLM mode abstraction
-- No unbounded agent loops
-- Explicit failure handling
-- Analyst-ready outputs (CSV)
+**AI OS for Financial Analysis** is a production-shaped, agentic system designed to perform **deterministic financial valuation and scenario analysis** using strict agent boundaries, schema-validated data flow, and external orchestration.
 
-## Example Workflow
-1. Build valuation model → `/finance/pipeline`
-2. Run scenario analysis → `/finance/scenario`
-3. Export results → `/finance/export/csv` or `/finance/scenario/export/csv`
+The system intentionally prioritizes:
 
-## Environment Setup
-Create a `.env` file locally (never committed):
+- **Correctness over prediction**
+- **Determinism over probabilistic outputs**
+- **Auditability over black-box automation**
+- **MOCK-first execution with PROD readiness**
 
-```env
-LLM_MODE=MOCK
-OPENAI_API_KEY=your_api_key_here
-```
-## Run Locally
-- python -m uvicorn api.main:app --reload
-- http://127.0.0.1:8000/docs
+This project is **not** a trading bot or an “AI wrapper.”  
+It is a **finance-grade analytical system** built to emulate how professional analyst workflows should be automated—safely and reproducibly.
+
+---
+
+## 🎯 Core Design Principles
+
+- **Deterministic computation**  
+  All financial math (DCF, scenario analysis) is strictly deterministic.  
+  No LLM is ever used for numerical calculations.
+
+- **Strict agent boundaries**  
+  Each agent has a single responsibility and communicates only through schema-validated contracts.
+
+- **Schema-first architecture**  
+  All agent inputs and outputs are validated using hard JSON / Pydantic schemas.  
+  No free-text handoffs. No hidden state.
+
+- **MOCK-first, PROD-ready**  
+  The system defaults to MOCK execution for safety, reproducibility, and cost control.  
+  Switching to PROD LLM execution requires **no code changes**, only environment configuration.
+
+- **External orchestration**  
+  Execution is coordinated externally using **n8n**, keeping business logic inside code and orchestration outside.
+
+---
+
+## 🧩 System Architecture (Conceptual)
+
