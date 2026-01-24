@@ -42,7 +42,7 @@ It is a **finance-grade analytical system** built to emulate how professional an
 ---
 
 ## 🧩 System Architecture (Conceptual)
-User / External Trigger
+```User / External Trigger
      ↓
 FastAPI API Layer
      ↓
@@ -59,7 +59,7 @@ Finance Agent
  - Scenario Engine (Base / Bull / Bear)
         ↓
 Versioned CSV Artifacts
-
+```
 ### Orchestration (Sidecar)
 n8n (External Control Plane)
  - HTTP triggers
