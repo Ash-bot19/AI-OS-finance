@@ -43,39 +43,29 @@ It is a **finance-grade analytical system** built to emulate how professional an
 
 ## 🧩 System Architecture (Conceptual)
 User / External Trigger
-↓
+     ↓
 FastAPI API Layer
-↓
+     ↓
 Research Agent (LLM – MOCK-first)
-↓
+     ↓
 Schema-Validated Boundary
-↓
+     ↓
 Data Engineering Agent
-↓
+     ↓
 Schema-Validated Boundary
-↓
+     ↓
 Finance Agent
-
-Deterministic DCF Engine
-
-Scenario Engine (Base / Bull / Bear)
-↓
+ - Deterministic DCF Engine
+ - Scenario Engine (Base / Bull / Bear)
+        ↓
 Versioned CSV Artifacts
 
 ### Orchestration (Sidecar)
-
 n8n (External Control Plane)
-
-HTTP triggers
-
-Execution ordering
-
-Error propagation
-
-Retry / halt control
-
-yaml
-Copy code
+ - HTTP triggers
+ - Execution ordering
+ - Error propagation
+ - Retry / halt control
 
 ---
 
@@ -227,17 +217,15 @@ These artifacts are:
 
 ```bash
 docker compose up
+```
 This will start:
-
-FastAPI service
-
-n8n orchestration engine
-
-All agents in a controlled environment
+- FastAPI service
+- n8n orchestration engine
+- All agents in a controlled environment
 
 API Documentation
 Once running:
-
 bash
-Copy code
+```
 http://localhost:8000/docs
+```
