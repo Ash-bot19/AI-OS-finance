@@ -42,7 +42,8 @@ It is a **finance-grade analytical system** built to emulate how professional an
 ---
 
 ## 🧩 System Architecture (Conceptual)
-```User / External Trigger
+```
+User / External Trigger
      ↓
 FastAPI API Layer
      ↓
