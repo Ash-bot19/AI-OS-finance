@@ -4,7 +4,7 @@
 ---
 
 ## 📌 Overview
-
+![image alt](https://github.com/Ash-bot19/AI-OS-finance/blob/main/AI%20OS.png?raw=true)
 **AI OS for Financial Analysis** is a production-shaped, agentic system designed to perform **deterministic financial valuation and scenario analysis** using strict agent boundaries, schema-validated data flow, and external orchestration.
 
 The system intentionally prioritizes:
